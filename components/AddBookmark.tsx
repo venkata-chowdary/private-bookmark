@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
 export default function AddBookmark() {
     const supabase = createClient()
