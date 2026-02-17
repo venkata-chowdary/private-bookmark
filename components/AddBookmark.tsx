@@ -1,10 +1,11 @@
 'use client'
 
 import { createClient } from '@/utils/supabase/client'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 export default function AddBookmark() {
     const supabase = createClient()
+    const router = useRouter()
     const [title, setTitle] = useState('')
     const [url, setUrl] = useState('')
     const [loading, setLoading] = useState(false)
@@ -22,6 +23,7 @@ export default function AddBookmark() {
         } else {
             setTitle('')
             setUrl('')
+            router.refresh()
         }
         setLoading(false)
     }

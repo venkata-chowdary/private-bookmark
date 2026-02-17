@@ -34,7 +34,13 @@ export default function BookmarkList({ initialBookmarks }: { initialBookmarks: B
                         console.log('Handling INSERT event. Payload new:', payload.new)
                         setBookmarks((prev) => {
                             console.log('Previous bookmarks:', prev)
-                            const newB = [payload.new as Bookmark, ...prev]
+                            const newBookmark = payload.new as Bookmark
+                            // Check if bookmark already exists
+                            if (prev.some(b => b.id === newBookmark.id)) {
+                                console.log('Bookmark already exists, skipping realtime update')
+                                return prev
+                            }
+                            const newB = [newBookmark, ...prev]
                             console.log('New bookmarks list length:', newB.length)
                             return newB
                         })
