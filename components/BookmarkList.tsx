@@ -28,7 +28,7 @@ export default function BookmarkList({ initialBookmarks }: { initialBookmarks: B
                     schema: 'public',
                     table: 'bookmarks',
                 },
-                (payload) => {
+                (payload: any) => {
                     console.log('Realtime payload received:', payload)
                     if (payload.eventType === 'INSERT') {
                         console.log('Handling INSERT event. Payload new:', payload.new)
@@ -44,7 +44,7 @@ export default function BookmarkList({ initialBookmarks }: { initialBookmarks: B
                     }
                 }
             )
-            .subscribe((status) => {
+            .subscribe((status: any) => {
                 console.log('Realtime subscription status:', status)
             })
 
