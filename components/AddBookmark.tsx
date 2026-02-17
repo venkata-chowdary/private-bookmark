@@ -4,13 +4,16 @@ import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
+import { useToast } from './Toast'
+
 export default function AddBookmark() {
     const supabase = createClient()
     const router = useRouter()
+    const { showToast } = useToast()
     const [title, setTitle] = useState('')
     const [url, setUrl] = useState('')
     const [loading, setLoading] = useState(false)
-
+    // ...
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         if (!title || !url) return
@@ -20,11 +23,12 @@ export default function AddBookmark() {
 
         if (error) {
             console.error('Error adding bookmark:', error)
-            alert('Error adding bookmark')
+            showToast('Failed to add bookmark', 'error')
         } else {
             setTitle('')
             setUrl('')
             router.refresh()
+            showToast('Bookmark added successfully', 'success')
         }
         setLoading(false)
     }

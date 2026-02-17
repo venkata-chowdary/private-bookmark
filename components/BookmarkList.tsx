@@ -2,6 +2,7 @@
 
 import { createClient } from '@/utils/supabase/client'
 import { useEffect, useState } from 'react'
+import { useToast } from './Toast'
 
 interface Bookmark {
     id: string
@@ -12,6 +13,7 @@ interface Bookmark {
 
 export default function BookmarkList({ initialBookmarks }: { initialBookmarks: Bookmark[] }) {
     const supabase = createClient()
+    const { showToast } = useToast()
     const [bookmarks, setBookmarks] = useState<Bookmark[]>(initialBookmarks)
 
     useEffect(() => {
@@ -67,7 +69,9 @@ export default function BookmarkList({ initialBookmarks }: { initialBookmarks: B
         const { error } = await supabase.from('bookmarks').delete().eq('id', id)
         if (error) {
             console.error('Error deleting bookmark:', error)
-            alert('Error deleting bookmark')
+            showToast('Failed to delete bookmark', 'error')
+        } else {
+            showToast('Bookmark deleted', 'success')
         }
     }
 
